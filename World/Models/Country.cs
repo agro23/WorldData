@@ -7,10 +7,11 @@ namespace WorldData.Models
 {
   public class Country
   {
-    private int _id;
+    // private int _id;
     private string _code;
     private string _name;
-    private int _continent; // this is an enumeration which is a sort of shortcut to the string name, it should be 1-7
+    // private Dictionary<int, string> _continent; // this is an enumeration which is a sort of shortcut to the string name, it should be 1-7
+    private string _continent;
     private string _region;
     private float _surfaceArea;
     private int _indepYear;
@@ -18,15 +19,19 @@ namespace WorldData.Models
     private float _lifeExpectancy;
     private float _gnp;
     private float _gNPOld;
-    private string LocalName;
+    private string _localName;
     private string _governmentForm;
-    private string HeadOfState;
+    private string _headOfState;
     private int _capital;
     private string _code2;
 
-    public Country (int ID = 0, string Code = "", string Name = "", int Continent = 0, string Region = "", float SurfaceArea = 0.0, int IndepYear = 0, int Population = 0, float LifeExpectancy = 0.0, float GNP = 0.0, float GNPOld = 0.0, string LocalName = "", string GovernmentForm = "", string HeadOfState = "", int Capital = 0, string Code2 = "")
+    // public Country (int ID = 0, string Code = "", string Name = "", int Continent = 0, string Region = "", float SurfaceArea = 0, int IndepYear = 0, int Population = 0, float LifeExpectancy = 0, float GNP = 0, float GNPOld = 0, string LocalName = "", string GovernmentForm = "", string HeadOfState = "", int Capital = 0, string Code2 = "")
+    // public Country (string Code = "", string Name = "", Dictionary<int, string> Continent = new Dictionary<int, string>{0,""}, string Region = "", float SurfaceArea = 0, int IndepYear = 0, int Population = 0, float LifeExpectancy = 0, float GNP = 0, float GNPOld = 0, string LocalName = "", string GovernmentForm = "", string HeadOfState = "", int Capital = 0, string Code2 = "")
+
+    // public Country (string Code = "", string Name = "", string Continent = "", string Region = "", float SurfaceArea = 0, int IndepYear = 0, int Population = 0, float LifeExpectancy = 0, float GNP = 0, float GNPOld = 0, string LocalName = "", string GovernmentForm = "", string HeadOfState = "", int Capital = 0, string Code2 = "")
+      public Country (string Code, string Name, string Continent, string Region, float SurfaceArea, int IndepYear, int Population, float LifeExpectancy, float GNP, float GNPOld, string LocalName, string GovernmentForm, string HeadOfState, int Capital, string Code2)
     {
-    _id = ID;
+    // _id = ID;
     _code = Code;
     _name = Name;
     _continent = Continent;
@@ -44,9 +49,14 @@ namespace WorldData.Models
     _code2 = Code2;
     }
 
-        public int GetID()
+        // public int GetID()
+        // {
+        //   return _id;
+        // }
+
+        public string GetCode()
         {
-          return _id;
+          return _code;
         }
 
         public string GetName()
@@ -54,8 +64,42 @@ namespace WorldData.Models
           return _name;
         }
 
+        public int GetPopulation()
+        {
+          return _population;
+        }
+
+        public string GetHeadOfState()
+        {
+          return _headOfState;
+        }
+
+        public float GetGNP()
+        {
+          return _gnp;
+        }
+
         public static List<Country> GetAll()
         {
+
+          string countryCode = "";
+          string countryName = "";
+          string countryContinent = "";
+          string countryRegion = "";
+          float countrySurfaceArea = 0;
+          int countryIndepYear = 0;
+          int countryPopulation = 0;
+          float countryLifeExpectancy = 0;
+          float countryGNP = 0;
+          float countryGNPOld = 0;
+          string countryLocalName = "";
+          string countryGovernmentForm = "";
+          string countryHeadOfState = "";
+          int countryCapital = 0;
+          string countryCode2 = "";
+
+
+
             List<Country> allCountries = new List<Country> {};
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -66,24 +110,75 @@ namespace WorldData.Models
             while(rdr.Read())
             {
               // not sure if we need these parameters after each rdr.GetBLAH() call but I think they are the columns
-              int cityID = rdr.GetInt32(0);
-              string cityName = rdr.GetString(1);
-              string countryCode = rdr.GetString(2);
-              string distrinctName = rdr.GetString(3);
-              int population = rdr.GetInt32(4);
-              // ^-- copy the format of these guys ********************************************************************
-              // add 'country' to the front of all these guys --v
-              int countryID = 0;
-              string countryCode = ;
-              *******string Name = "", int Continent = 0, string Region = "", float SurfaceArea = 0.0, int IndepYear = 0, int Population = 0, float LifeExpectancy = 0.0, float GNP = 0.0, float GNPOld = 0.0, string LocalName = "", string GovernmentForm = "", string HeadOfState = "", int Capital = 0, string Code2 = ""
 
-              // then copy all the new country var names into the Country declaration below using these --v to save time.
+              // int countryID = rdr.GetInt32(0);
+              countryCode = rdr.GetString(0);
+              countryName = rdr.GetString(1);
+              // Console.WriteLine(countryName); // enumerated type
 
-              int ID = 0, Code = "", string Name = "", int Continent = 0, string Region = "", float SurfaceArea = 0.0, int IndepYear = 0, int Population = 0, float LifeExpectancy = 0.0, float GNP = 0.0, float GNPOld = 0.0, string LocalName = "", string GovernmentForm = "", string HeadOfState = "", int Capital = 0, string Code2 = ""
-              Country newCountry = new Country (cityID, cityName, countryCode, distrinctName, population); // ignore the parameters in there now
-              // City newCity = new City (cityID, cityName, countryCode, distrinctName, population);
-              // Item newItem = new Item(itemDescription, itemId);
-              allCities.Add(newCity);
+              // dictionary<int, string> countryContinent = rdr.GetEnumerator(2);
+              // int countryContinent = rdr.GetEnumerator(2);
+              countryContinent = rdr.GetString(2);
+              // Console.WriteLine(countryContinent); // enumerated type
+              countryRegion = rdr.GetString(3);
+              // Console.WriteLine(countryRegion); // enumerated type
+
+              countrySurfaceArea = rdr.GetFloat(4);
+
+              // countryIndepYear = rdr.GetInt32(5);
+
+                 if (!rdr.IsDBNull(5)) {
+                   countryIndepYear = rdr.GetInt32(5);
+                 } else {
+                   countryIndepYear = 0;
+                 }
+
+              countryPopulation = rdr.GetInt32(6);
+
+              // countryLifeExpectancy = rdr.GetFloat(7);
+              if (!rdr.IsDBNull(7)) {
+                countryLifeExpectancy = rdr.GetFloat(7);
+              } else {
+                countryLifeExpectancy = 0;
+              }
+
+              countryGNP = rdr.GetFloat(8);
+
+              // countryGNPOld = rdr.GetFloat(9);
+
+              if (!rdr.IsDBNull(9)) {
+                countryGNPOld = rdr.GetFloat(9);
+              } else {
+                countryGNPOld = 0;
+              }
+
+              countryLocalName = rdr.GetString(10);
+              countryGovernmentForm = rdr.GetString(11);
+
+              if (!rdr.IsDBNull(12)) {
+                countryHeadOfState = rdr.GetString(12);
+              } else {
+                countryHeadOfState =  "";
+              }
+
+              // countryHeadOfState = rdr.GetString(12);
+
+              // countryCapital = rdr.GetInt32(13);
+
+              if (!rdr.IsDBNull(13)) {
+                countryCapital = rdr.GetInt32(13);
+              } else {
+                countryCapital = 0;
+              }
+
+
+
+              countryCode2 = rdr.GetString(14);
+              // float x = 3;
+              // Country newCountry = new Country (countryID, countryCode, countryName, countryContinent, countryRegion, countrySurfaceArea, countryIndepYear, countryPopulation, countryLifeExpectancy, countryGNP, countryGNPOld, countryLocalName, countryGovernmentForm, countryHeadOfState, countryCapital, countryCode2);
+              Country newCountry = new Country (countryCode, countryName, countryContinent, countryRegion, countrySurfaceArea, countryIndepYear, countryPopulation, countryLifeExpectancy, countryGNP, countryGNPOld, countryLocalName, countryGovernmentForm, countryHeadOfState, countryCapital, countryCode2);
+
+              allCountries.Add(newCountry);
               // int Id = 0, string Name, string CountryCode, string District, int Popultion
             }
             conn.Close();
@@ -91,7 +186,7 @@ namespace WorldData.Models
             {
                 conn.Dispose();
             }
-            return allCities;
+            return allCountries;
         }
 
         // public static List<City> GetItem (int id)

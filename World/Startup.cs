@@ -42,7 +42,7 @@ namespace WorldData
 
     public static class DBConfiguration
     {
-        public static string ConnectionString = "server=localhost;user id=root;password=Qsw7FaaOzOyVqz2m;port=8889;database=world;";
+        public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=world;";
         // public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=todo;";
         // ID AND PASSWORD ARE GOING TO BE WRONG!
     }

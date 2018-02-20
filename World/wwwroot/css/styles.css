@@ -11,3 +11,9 @@
 .row {
  padding: .5em;
 }
+
+.jumbotron {
+  text-align: center;
+  background color: chartreuse;
+
+}
